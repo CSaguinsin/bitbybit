@@ -1,0 +1,292 @@
+/* 
+ * BIT BY BIT - Main Stylesheet
+ * A modern SaaS blog platform for technology enthusiasts
+ */
+
+/* Base Tailwind imports - would be replaced with a proper build */
+@import url('https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap');
+
+/* Custom Properties */
+:root {
+    --primary-color: #2563eb;
+    --primary-dark: #1d4ed8;
+    --secondary-color: #1e293b;
+    --accent-color: #10b981;
+    --light-bg: #f8fafc;
+    --dark-bg: #1e293b;
+    --text-primary: #334155;
+    --text-secondary: #64748b;
+    --border-color: #e2e8f0;
+    --success: #16a34a;
+    --warning: #f59e0b;
+    --danger: #dc2626;
+    --info: #0891b2;
+}
+
+/* Typography */
+body {
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    background-color: var(--light-bg);
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--secondary-color);
+    margin-bottom: 1rem;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+code, pre {
+    font-family: 'JetBrains Mono', monospace;
+}
+
+/* Buttons */
+.btn {
+    @apply inline-flex items-center justify-center px-4 py-2 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2;
+}
+
+.btn-primary {
+    @apply bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500;
+}
+
+.btn-secondary {
+    @apply bg-gray-100 text-gray-900 hover:bg-gray-200 focus:ring-gray-500;
+}
+
+.btn-accent {
+    @apply bg-emerald-500 text-white hover:bg-emerald-600 focus:ring-emerald-400;
+}
+
+.btn-outline {
+    @apply border border-gray-300 text-gray-700 hover:bg-gray-50 focus:ring-gray-500;
+}
+
+/* Navbar Customization */
+.navbar {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.navbar-brand {
+    @apply font-bold text-lg;
+}
+
+.navbar-brand span.bit {
+    @apply text-blue-600;
+}
+
+.navbar-brand span.by {
+    @apply text-gray-500 text-sm font-normal;
+}
+
+.navbar-brand span.bit-end {
+    @apply text-emerald-500;
+}
+
+.nav-link {
+    @apply px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900;
+}
+
+.nav-link.active {
+    @apply bg-blue-50 text-blue-700;
+}
+
+/* Card Styles */
+.card {
+    @apply bg-white rounded-xl shadow-sm border border-gray-200 transition-transform duration-300 hover:shadow-md;
+}
+
+.card-img-top {
+    border-top-left-radius: 0.75rem;
+    border-top-right-radius: 0.75rem;
+}
+
+/* Form Styles */
+.form-control, .form-select {
+    padding: 0.625rem 1rem;
+    border-radius: 0.375rem;
+    border: 1px solid var(--border-color);
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.25rem rgba(37, 99, 235, 0.25);
+}
+
+.form-label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+/* Custom Badge */
+.badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+}
+
+.badge-primary {
+    @apply bg-blue-100 text-blue-800;
+}
+
+.badge-accent {
+    @apply bg-emerald-100 text-emerald-800;
+}
+
+.badge-secondary {
+    @apply bg-gray-100 text-gray-800;
+}
+
+/* Footer */
+.footer {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.footer a {
+    transition: color 0.2s ease;
+}
+
+.footer a:hover {
+    color: white !important;
+}
+
+/* Hero Section */
+.hero-section {
+    position: relative;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 5rem 0;
+    overflow: hidden;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('../images/hero-pattern.svg');
+    background-size: cover;
+    opacity: 0.1;
+    z-index: 1;
+}
+
+.hero-section .container {
+    position: relative;
+    z-index: 2;
+}
+
+/* Article Content */
+.post-content h2 {
+    @apply text-2xl font-bold text-gray-900 mt-8 mb-4;
+}
+
+.post-content h3 {
+    @apply text-xl font-semibold text-gray-900 mt-6 mb-3;
+}
+
+.post-content p {
+    @apply text-gray-700 mb-4 leading-relaxed;
+}
+
+.post-content ul, .post-content ol {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+}
+
+.post-content li {
+    margin-bottom: 0.5rem;
+}
+
+.post-content blockquote {
+    @apply border-l-4 border-blue-500 pl-4 italic text-gray-600 my-6;
+}
+
+.post-content code {
+    @apply font-mono text-sm bg-gray-100 px-1.5 py-0.5 rounded;
+}
+
+.post-content pre {
+    @apply bg-gray-800 text-white p-4 rounded-lg overflow-x-auto mb-6;
+}
+
+.post-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 2rem 0;
+}
+
+/* Responsiveness */
+@media (max-width: 767.98px) {
+    .navbar {
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+    }
+
+    .hero-section {
+        padding: 3rem 0;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.75rem;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.6s ease forwards;
+}
+
+/* Dark Mode Support (optional) */
+@media (prefers-color-scheme: dark) {
+    body.dark-mode {
+        background-color: var(--dark-bg);
+        color: #e2e8f0;
+    }
+    
+    body.dark-mode h1, 
+    body.dark-mode h2, 
+    body.dark-mode h3, 
+    body.dark-mode h4, 
+    body.dark-mode h5, 
+    body.dark-mode h6 {
+        color: #f1f5f9;
+    }
+    
+    body.dark-mode .card {
+        background-color: #1e293b;
+        border-color: #334155;
+    }
+    
+    body.dark-mode .text-secondary {
+        color: #94a3b8 !important;
+    }
+    
+    body.dark-mode .navbar {
+        background-color: #0f172a !important;
+    }
+    
+    body.dark-mode .navbar-light .navbar-nav .nav-link {
+        color: #e2e8f0;
+    }
+} 
