@@ -26,10 +26,10 @@ class Database extends Config
      */
     public array $default = [
         'DSN'          => '',
-        'hostname'     => 'localhost',
-        'username'     => '',
-        'password'     => '',
-        'database'     => '',
+        'hostname'     => '127.0.0.1',
+        'username'     => 'root',
+        'password'     => '',  // XAMPP default is usually empty, change if you've set a password
+        'database'     => 'bitbybit',  // Your database name
         'DBDriver'     => 'MySQLi',
         'DBPrefix'     => '',
         'pConnect'     => false,
@@ -42,6 +42,7 @@ class Database extends Config
         'strictOn'     => false,
         'failover'     => [],
         'port'         => 3306,
+        // 'socket'       => '/Applications/XAMPP/xamppfiles/var/mysql/mysql.sock',
         'numberNative' => false,
         'foundRows'    => false,
         'dateFormat'   => [

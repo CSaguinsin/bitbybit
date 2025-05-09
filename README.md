@@ -1,32 +1,74 @@
-# CodeIgniter 4 Application Starter
 
-## What is CodeIgniter?
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+## Getting Started with Bitbybit Project
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+### Prerequisites
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+1. PHP version 8.1 or higher
+2. MySQL database (XAMPP, MAMP, or standalone MySQL installation)
+3. Composer
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+### Installation & Setup
 
-## Installation & updates
+1. Clone the repository:
+   ```
+   git clone https://github.com/yourusername/bitbybit.git
+   cd bitbybit
+   ```
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
+2. Install dependencies:
+   ```
+   composer install
+   ```
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+3. Copy `env` to `.env` and configure your environment:
+   ```
+   cp env .env
+   ```
+   
+4. Open the `.env` file and set your baseURL and other settings:
+   ```
+   app.baseURL = 'http://localhost:8080'
+   ```
 
-## Setup
+5. Database Configuration:
+   - Make sure MySQL server is running
+   - The database configuration is already set up in `app/Config/Database.php` with:
+     - Hostname: 127.0.0.1
+     - Username: root
+     - Password: (empty by default, change if your MySQL setup has a different password)
+     - Database: bitbybit
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+6. Database Setup:
+   - Create the database by running:
+     ```
+     /path/to/mysql -u root -e "CREATE DATABASE IF NOT EXISTS bitbybit;"
+     ```
+     Or if using XAMPP:
+     ```
+     /Applications/XAMPP/xamppfiles/bin/mysql -u root -e "CREATE DATABASE IF NOT EXISTS bitbybit;"
+     ```
+
+7. Run migrations to create all database tables:
+   ```
+   php spark migrate
+   ```
+
+8. Start the development server:
+   ```
+   php spark serve
+   ```
+
+9. Open your browser and visit `http://localhost:8080`
+
+## Project Database Structure
+
+The project uses a MySQL database with the following tables:
+
+- `bitbybit_role`: User roles
+- `bitbybit_users`: User accounts
+- `bitbybit_posts`: Blog posts/content
+- `bitbybit_comments`: Comments on posts
 
 ## Important Change with index.php
 
@@ -36,17 +78,6 @@ for better security and separation of components.
 This means that you should configure your web server to "point" to your project's *public* folder, and
 not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
 framework are exposed.
-
-**Please** read the user guide for a better explanation of how CI4 works!
-
-## Repository Management
-
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
-
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
 
 ## Server Requirements
 
@@ -64,5 +95,13 @@ PHP version 8.1 or higher is required, with the following extensions installed:
 Additionally, make sure that the following extensions are enabled in your PHP:
 
 - json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
+- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) for MySQL database connection
 - [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+
+## Troubleshooting
+
+If you encounter database connection issues:
+1. Ensure MySQL is running
+2. Check your database credentials in `app/Config/Database.php`
+3. If using XAMPP/MAMP, make sure the services are started
+4. Try using '127.0.0.1' instead of 'localhost' as the hostname
