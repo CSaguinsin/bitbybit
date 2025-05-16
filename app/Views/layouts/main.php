@@ -38,13 +38,23 @@
         <svg width="32" height="24" viewBox="0 0 220 160" fill="none" class="h-8 w-8 md:h-10 md:w-10"><rect x="10" y="30" width="200" height="80" rx="12" fill="#fff" fill-opacity=".12"/><rect x="24" y="46" width="172" height="12" rx="3" fill="#a5b4fc"/><rect x="24" y="66" width="120" height="8" rx="2" fill="#fbbf24"/><rect x="24" y="80" width="172" height="8" rx="2" fill="#f472b6"/><rect x="24" y="94" width="80" height="8" rx="2" fill="#34d399"/></svg>
       </span>
     </a>
-    <nav class="hidden md:flex gap-8 text-lg font-medium">
-      <a href="<?= site_url('/') ?>" class="hover:text-indigo-600 transition">Home</a>
-      <a href="<?= site_url('posts') ?>" class="hover:text-indigo-600 transition">Articles</a>
-      <a href="<?= site_url('about') ?>" class="hover:text-indigo-600 transition">About</a>
-      <a href="<?= site_url('register') ?>" class="hover:text-indigo-600 transition">Join</a>
-    </nav>
-    <a href="<?= site_url('register') ?>" class="ml-4 px-6 py-2 rounded-lg bg-gradient-to-r from-indigo-600 via-pink-500 to-purple-600 text-white font-bold shadow-lg hover:scale-105 hover:from-indigo-700 hover:to-purple-700 transition-all duration-200">Get Started</a>
+    <?php if (session()->get('isLoggedIn')): ?>
+      <div class="flex items-center gap-3 ml-auto">
+        <a href="<?= site_url('profile') ?>" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/70 border border-indigo-100 text-indigo-700 font-semibold shadow hover:bg-indigo-50 transition-all">
+          <i class="fas fa-user-circle text-xl"></i>
+          <span class="hidden sm:inline">Profile</span>
+        </a>
+        <a href="<?= site_url('logout') ?>" class="px-4 py-2 rounded-lg bg-gradient-to-r from-indigo-600 via-pink-500 to-purple-600 text-white font-bold shadow-lg hover:scale-105 hover:from-indigo-700 hover:to-purple-700 transition-all duration-200">Logout</a>
+      </div>
+    <?php else: ?>
+      <nav class="hidden md:flex gap-8 text-lg font-medium">
+        <a href="<?= site_url('/') ?>" class="hover:text-indigo-600 transition">Home</a>
+        <a href="<?= site_url('posts') ?>" class="hover:text-indigo-600 transition">Articles</a>
+        <a href="<?= site_url('about') ?>" class="hover:text-indigo-600 transition">About</a>
+        <a href="<?= site_url('register') ?>" class="hover:text-indigo-600 transition">Join</a>
+      </nav>
+      <a href="<?= site_url('register') ?>" class="ml-4 px-6 py-2 rounded-lg bg-gradient-to-r from-indigo-600 via-pink-500 to-purple-600 text-white font-bold shadow-lg hover:scale-105 hover:from-indigo-700 hover:to-purple-700 transition-all duration-200">Get Started</a>
+    <?php endif; ?>
   </div>
 </header>
 

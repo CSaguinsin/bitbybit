@@ -151,42 +151,46 @@
 
 <!-- ARTICLE GRID -->
 <div class="max-w-7xl mx-auto px-2 sm:px-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 md:gap-x-10">
-  <?php for ($i = 1; $i <= 9; $i++): // Replace with actual posts data ?>
-    <div class="bg-white/60 backdrop-blur-lg rounded-xl shadow-xl flex flex-col hover:shadow-2xl hover:scale-105 transition-all overflow-hidden">
-      <img src="https://via.placeholder.com/800x450?text=Article+<?= $i ?>" class="w-full h-40 sm:h-48 object-cover rounded-t-xl" alt="Article Image">
-      <div class="p-4 sm:p-6 flex flex-col flex-1">
-        <div class="flex flex-col sm:flex-row sm:justify-between mb-2 gap-1 sm:gap-0">
-          <span class="px-3 py-1 rounded-full bg-gradient-to-r <?= $i % 3 == 0 ? 'from-green-200 via-green-100 to-green-50 text-green-700' : ($i % 2 == 0 ? 'from-blue-200 via-blue-100 to-blue-50 text-blue-700' : 'from-amber-200 via-amber-100 to-amber-50 text-amber-700') ?> text-xs font-bold w-max break-words">
-            <?= $i % 3 == 0 ? 'DevOps' : ($i % 2 == 0 ? 'Data Science' : 'Web Dev') ?>
-          </span>
-          <small class="text-gray-500">May <?= $i + 1 ?>, 2025</small>
-        </div>
-        <h3 class="text-base sm:text-lg font-bold mb-2 break-words">
-          <a href="<?= site_url('posts/' . $i) ?>" class="hover:underline text-gray-900">
-            <?= $i % 3 == 0 ? 'Optimizing CI/CD Pipelines for Faster Deployment' : 
-               ($i % 2 == 0 ? 'Data Visualization Techniques Every Developer Should Know' : 
-               'Building Responsive UIs with Modern CSS Frameworks') ?>
-          </a>
-        </h3>
-        <p class="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 flex-1 break-words">
-          <?= $i % 3 == 0 ? 'Learn how to improve your continuous integration and deployment workflows to ship code faster and more reliably...' : 
-             ($i % 2 == 0 ? 'Effective data visualization is essential for understanding complex datasets. Discover the best techniques for your projects...' : 
-             'Explore the latest CSS frameworks and learn how to create beautiful, responsive user interfaces for any screen size...') ?>
-        </p>
-        <div class="flex justify-between items-center mt-auto">
-          <div class="flex items-center">
-            <img src="https://via.placeholder.com/32" class="h-7 w-7 sm:h-8 sm:w-8 rounded-full mr-2" alt="Author Avatar">
-            <span class="text-xs text-gray-700 break-words">
-              <?= $i % 3 == 0 ? 'David Kim' : ($i % 2 == 0 ? 'Sarah Johnson' : 'Mike Richards') ?>
+  <?php if (!empty($posts) && is_array($posts)): ?>
+    <?php foreach ($posts as $post): ?>
+      <div class="bg-white/60 backdrop-blur-lg rounded-xl shadow-xl flex flex-col hover:shadow-2xl hover:scale-105 transition-all overflow-hidden">
+        <img src="<?= $post['featured_image'] ? base_url($post['featured_image']) : 'https://via.placeholder.com/800x450?text=No+Image' ?>" class="w-full h-40 sm:h-48 object-cover rounded-t-xl" alt="Article Image">
+        <div class="p-4 sm:p-6 flex flex-col flex-1">
+          <div class="flex flex-col sm:flex-row sm:justify-between mb-2 gap-1 sm:gap-0">
+            <span class="px-3 py-1 rounded-full bg-gradient-to-r from-indigo-200 via-pink-200 to-purple-200 text-indigo-700 text-xs font-bold w-max break-words">
+              <?= esc(ucwords(str_replace('-', ' ', $post['category']))) ?>
             </span>
+            <small class="text-gray-500">
+              <?= date('M j, Y', strtotime($post['created_at'] ?? $post['created'] ?? 'now')) ?>
+            </small>
           </div>
-          <div class="flex items-center text-gray-500 text-xs gap-2">
-            <span><i class="far fa-heart mr-1"></i> <?= rand(5, 200) ?></span>
+          <h3 class="text-base sm:text-lg font-bold mb-2 break-words">
+            <a href="<?= site_url('posts/' . $post['id']) ?>" class="hover:underline text-gray-900">
+              <?= esc($post['title']) ?>
+            </a>
+          </h3>
+          <p class="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 flex-1 break-words">
+            <?= esc($post['summary']) ?>
+          </p>
+          <div class="flex justify-between items-center mt-auto">
+            <div class="flex items-center">
+              <img src="https://via.placeholder.com/32" class="h-7 w-7 sm:h-8 sm:w-8 rounded-full mr-2" alt="Author Avatar">
+              <span class="text-xs text-gray-700 break-words">
+                <?= isset($post['created_by']) ? 'User #' . esc($post['created_by']) : 'Unknown Author' ?>
+              </span>
+            </div>
+            <div class="flex items-center text-gray-500 text-xs gap-2">
+              <span><i class="far fa-heart mr-1"></i>0</span>
+            </div>
           </div>
         </div>
       </div>
+    <?php endforeach; ?>
+  <?php else: ?>
+    <div class="col-span-full text-center py-12 text-gray-500 font-mono text-lg">
+      No articles found. Be the first to <a href="<?= site_url('posts/create') ?>" class="underline text-indigo-600">write one</a>!
     </div>
-  <?php endfor; ?>
+  <?php endif; ?>
 </div>
 
 <!-- PAGINATION -->

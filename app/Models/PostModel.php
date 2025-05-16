@@ -27,7 +27,10 @@ class PostModel extends Model
         'tags',
         'created_by',
         'featured_image',
-        'category'
+        'category',
+        'date_created',
+        'last_updated',
+        'deleted_at'
     ];
     
     protected $validationRules = [

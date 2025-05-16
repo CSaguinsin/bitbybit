@@ -27,15 +27,24 @@ class Posts extends BaseController
         
         // Get category filter if exists
         $category = $this->request->getGet('category');
+        $search = $this->request->getGet('search');
+        
+        $builder = $this->postModel;
+        
         if ($category) {
+            $builder = $builder->where('category', $category);
             $data['category'] = $category;
         }
-        
-        // Get search query if exists
-        $search = $this->request->getGet('search');
         if ($search) {
+            $builder = $builder->like('title', $search)->orLike('summary', $search)->orLike('content', $search);
             $data['search'] = $search;
         }
+        // Only show published posts
+        $builder = $builder->where('published', 1);
+        // Order by most recent
+        $builder = $builder->orderBy('id', 'DESC');
+        
+        $data['posts'] = $builder->findAll();
         
         return view('posts/index', $data);
     }
@@ -62,6 +71,11 @@ class Posts extends BaseController
         $data = [
             'title' => 'Create Article'
         ];
+        
+        // Pass validation errors if they exist
+        if (session()->getFlashdata('validation')) {
+            $data['validation'] = session()->getFlashdata('validation');
+        }
         
         return view('posts/create', $data);
     }
@@ -95,8 +109,7 @@ class Posts extends BaseController
             $imagePath = 'uploads/posts/' . $newName;
             
             // Move the image to the uploads directory
-            // In a real implementation, you'd need to create this directory and make it writable
-            //$featuredImage->move(ROOTPATH . 'public/uploads/posts', $newName);
+            $featuredImage->move(ROOTPATH . 'public/uploads/posts', $newName);
         }
         
         // Prepare post data
@@ -108,11 +121,12 @@ class Posts extends BaseController
             'featured_image' => $imagePath,
             'tags' => $this->request->getPost('tags'),
             'published' => $this->request->getPost('published'),
-            'created_by' => session()->get('user_id')
+            'created_by' => session()->get('user_id'),
+            'date_created' => date('Y-m-d H:i:s'),
+            'last_updated' => date('Y-m-d H:i:s')
         ];
         
-        // In a real implementation, you would save the post to the database
-        // $this->postModel->insert($postData);
+        $this->postModel->insert($postData);
         
         // Set success message
         session()->setFlashdata('success', 'Article created successfully' . ($postData['published'] ? ' and published' : ' as draft'));

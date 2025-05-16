@@ -55,7 +55,7 @@ class Auth extends BaseController
             ];
             session()->set($userData);
             session()->setFlashdata('success', 'Login successful! Welcome back.');
-            return redirect()->to('/');
+            return redirect()->to('posts');
         }
         
         session()->setFlashdata('error', 'Invalid email or password. Please try again.');
