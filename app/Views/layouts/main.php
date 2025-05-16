@@ -30,105 +30,23 @@
     <?= $this->renderSection('styles') ?>
 </head>
 <body class="min-h-screen flex flex-col bg-gray-50">
-    <!-- Navigation -->
-    <nav class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex">
-                    <div class="flex-shrink-0 flex items-center">
-                        <a href="<?= site_url() ?>" class="navbar-brand">
-                            <span class="bit">BIT</span> <span class="by">BY</span> <span class="bit-end">BIT</span>
-                        </a>
-                    </div>
-                    <div class="hidden sm:ml-6 sm:flex sm:space-x-4">
-                        <a href="<?= site_url() ?>" class="nav-link <?= current_url() == site_url() ? 'active' : '' ?>">Home</a>
-                        <a href="<?= site_url('posts') ?>" class="nav-link <?= strpos(current_url(), 'posts') !== false ? 'active' : '' ?>">Articles</a>
-                        <a href="<?= site_url('about') ?>" class="nav-link <?= strpos(current_url(), 'about') !== false ? 'active' : '' ?>">About</a>
-                    </div>
-                </div>
-                <div class="hidden sm:ml-6 sm:flex sm:items-center sm:space-x-4">
-                    <?php if (session()->get('isLoggedIn')): ?>
-                        <div class="relative ml-3">
-                            <div>
-                                <button type="button" class="flex items-center max-w-xs text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" id="userMenu" aria-expanded="false" aria-haspopup="true">
-                                    <span class="sr-only">Open user menu</span>
-                                    <span class="flex items-center space-x-2">
-                                        <span class="flex h-8 w-8 rounded-full bg-blue-100 text-blue-600 items-center justify-center">
-                                            <i class="fas fa-user text-sm"></i>
-                                        </span>
-                                        <span class="text-gray-700 font-medium"><?= session()->get('username') ?></span>
-                                        <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                        </svg>
-                                    </span>
-                                </button>
-                            </div>
-                            <div class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none hidden" role="menu" aria-orientation="vertical" aria-labelledby="userMenu" id="userMenuDropdown">
-                                <div class="py-1" role="none">
-                                    <a href="<?= site_url('profile') ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">My Profile</a>
-                                    <a href="<?= site_url('posts/create') ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Write Article</a>
-                                </div>
-                                <div class="py-1" role="none">
-                                    <a href="<?= site_url('logout') ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Logout</a>
-                                </div>
-                            </div>
-                        </div>
-                    <?php else: ?>
-                        <a href="<?= site_url('login') ?>" class="btn btn-outline">Login</a>
-                        <a href="<?= site_url('register') ?>" class="btn btn-primary">Sign Up</a>
-                    <?php endif; ?>
-                </div>
-                <div class="-mr-2 flex items-center sm:hidden">
-                    <!-- Mobile menu button -->
-                    <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500" aria-expanded="false" id="mobileMenuBtn">
-                        <span class="sr-only">Open main menu</span>
-                        <!-- Icon when menu is closed -->
-                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                        <!-- Icon when menu is open -->
-                        <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
 
-        <!-- Mobile menu, show/hide based on menu state -->
-        <div class="hidden sm:hidden" id="mobileMenu">
-            <div class="pt-2 pb-3 space-y-1">
-                <a href="<?= site_url() ?>" class="<?= current_url() == site_url() ? 'bg-blue-50 border-blue-500 text-blue-700' : 'border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700' ?> block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Home</a>
-                <a href="<?= site_url('posts') ?>" class="<?= strpos(current_url(), 'posts') !== false ? 'bg-blue-50 border-blue-500 text-blue-700' : 'border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700' ?> block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Articles</a>
-                <a href="<?= site_url('about') ?>" class="<?= strpos(current_url(), 'about') !== false ? 'bg-blue-50 border-blue-500 text-blue-700' : 'border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700' ?> block pl-3 pr-4 py-2 border-l-4 text-base font-medium">About</a>
-            </div>
-            <div class="pt-4 pb-3 border-t border-gray-200">
-                <?php if (session()->get('isLoggedIn')): ?>
-                    <div class="flex items-center px-4">
-                        <div class="flex-shrink-0">
-                            <div class="h-10 w-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center">
-                                <i class="fas fa-user"></i>
-                            </div>
-                        </div>
-                        <div class="ml-3">
-                            <div class="text-base font-medium text-gray-800"><?= session()->get('username') ?></div>
-                            <div class="text-sm font-medium text-gray-500"><?= session()->get('email') ?></div>
-                        </div>
-                    </div>
-                    <div class="mt-3 space-y-1">
-                        <a href="<?= site_url('profile') ?>" class="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100">My Profile</a>
-                        <a href="<?= site_url('posts/create') ?>" class="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100">Write Article</a>
-                        <a href="<?= site_url('logout') ?>" class="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100">Logout</a>
-                    </div>
-                <?php else: ?>
-                    <div class="mt-3 space-y-1 px-4">
-                        <a href="<?= site_url('login') ?>" class="block mb-2 px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100 rounded-md">Login</a>
-                        <a href="<?= site_url('register') ?>" class="block px-4 py-2 text-base font-medium bg-blue-600 text-white hover:bg-blue-700 rounded-md text-center">Sign Up</a>
-                    </div>
-                <?php endif; ?>
-            </div>
-        </div>
+<header class="sticky top-0 z-30 bg-white/80 backdrop-blur border-b border-gray-100 shadow-sm">
+  <div class="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+    <a href="<?= site_url('/') ?>" class="flex items-center gap-3 text-2xl font-extrabold text-indigo-700 tracking-tight">
+      <span class="inline-block align-middle">
+        <svg width="32" height="24" viewBox="0 0 220 160" fill="none" class="h-8 w-8 md:h-10 md:w-10"><rect x="10" y="30" width="200" height="80" rx="12" fill="#fff" fill-opacity=".12"/><rect x="24" y="46" width="172" height="12" rx="3" fill="#a5b4fc"/><rect x="24" y="66" width="120" height="8" rx="2" fill="#fbbf24"/><rect x="24" y="80" width="172" height="8" rx="2" fill="#f472b6"/><rect x="24" y="94" width="80" height="8" rx="2" fill="#34d399"/></svg>
+      </span>
+    </a>
+    <nav class="hidden md:flex gap-8 text-lg font-medium">
+      <a href="<?= site_url('/') ?>" class="hover:text-indigo-600 transition">Home</a>
+      <a href="<?= site_url('posts') ?>" class="hover:text-indigo-600 transition">Articles</a>
+      <a href="<?= site_url('about') ?>" class="hover:text-indigo-600 transition">About</a>
+      <a href="<?= site_url('register') ?>" class="hover:text-indigo-600 transition">Join</a>
     </nav>
+    <a href="<?= site_url('register') ?>" class="ml-4 px-6 py-2 rounded-lg bg-gradient-to-r from-indigo-600 via-pink-500 to-purple-600 text-white font-bold shadow-lg hover:scale-105 hover:from-indigo-700 hover:to-purple-700 transition-all duration-200">Get Started</a>
+  </div>
+</header>
 
     <!-- Flash Messages -->
     <?php if (session()->getFlashdata('success')): ?>
@@ -190,55 +108,27 @@
         <?= $this->renderSection('content') ?>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white mt-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div class="md:col-span-1">
-                    <h5 class="text-lg font-bold mb-4">BIT BY BIT</h5>
-                    <p class="text-gray-400 mb-4">A modern SaaS blog platform for technology enthusiasts, developers, and tech professionals to share knowledge and insights.</p>
-                </div>
-                <div class="md:col-span-1">
-                    <h5 class="text-lg font-bold mb-4">Links</h5>
-                    <ul class="space-y-2">
-                        <li><a href="<?= site_url() ?>" class="text-gray-400 hover:text-white transition">Home</a></li>
-                        <li><a href="<?= site_url('posts') ?>" class="text-gray-400 hover:text-white transition">Articles</a></li>
-                        <li><a href="<?= site_url('about') ?>" class="text-gray-400 hover:text-white transition">About</a></li>
-                        <li><a href="<?= site_url('privacy') ?>" class="text-gray-400 hover:text-white transition">Privacy Policy</a></li>
-                    </ul>
-                </div>
-                <div class="md:col-span-1">
-                    <h5 class="text-lg font-bold mb-4">Connect</h5>
-                    <ul class="space-y-2">
-                        <li><a href="https://github.com/yourusername/bitbybit" class="text-gray-400 hover:text-white transition flex items-center"><i class="fab fa-github mr-2"></i>GitHub</a></li>
-                        <li><a href="https://twitter.com/bitbybit" class="text-gray-400 hover:text-white transition flex items-center"><i class="fab fa-twitter mr-2"></i>Twitter</a></li>
-                        <li><a href="https://linkedin.com/company/bitbybit" class="text-gray-400 hover:text-white transition flex items-center"><i class="fab fa-linkedin mr-2"></i>LinkedIn</a></li>
-                    </ul>
-                </div>
-                <div class="md:col-span-1">
-                    <h5 class="text-lg font-bold mb-4">Subscribe</h5>
-                    <form>
-                        <div class="flex">
-                            <input type="email" class="flex-grow px-3 py-2 bg-gray-800 text-white rounded-l-md border-0 focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Email">
-                            <button class="bg-blue-600 text-white px-3 py-2 rounded-r-md hover:bg-blue-700 transition" type="button"><i class="fas fa-paper-plane"></i></button>
-                        </div>
-                        <p class="text-gray-500 text-xs mt-2">No spam, just the latest news and updates.</p>
-                    </form>
-                </div>
-            </div>
-            <div class="border-t border-gray-800 mt-8 pt-8">
-                <div class="flex flex-col md:flex-row justify-between items-center">
-                    <div class="mb-4 md:mb-0">
-                        <p class="text-gray-400 text-sm">&copy; <?= date('Y') ?> BIT BY BIT. All rights reserved.</p>
-                    </div>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-white text-sm transition">Terms of Service</a>
-                        <a href="#" class="text-gray-400 hover:text-white text-sm transition">Privacy Policy</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
+<!-- FOOTER -->
+<footer class="bg-gradient-to-r from-indigo-900 via-purple-900 to-gray-900 text-gray-300 py-10 mt-12 backdrop-blur-lg">
+  <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+  <a href="<?= site_url('/') ?>" class="flex items-center gap-3 text-2xl font-extrabold text-indigo-700 tracking-tight">
+      <span class="inline-block align-middle">
+        <svg width="32" height="24" viewBox="0 0 220 160" fill="none" class="h-8 w-8 md:h-10 md:w-10"><rect x="10" y="30" width="200" height="80" rx="12" fill="#fff" fill-opacity=".12"/><rect x="24" y="46" width="172" height="12" rx="3" fill="#a5b4fc"/><rect x="24" y="66" width="120" height="8" rx="2" fill="#fbbf24"/><rect x="24" y="80" width="172" height="8" rx="2" fill="#f472b6"/><rect x="24" y="94" width="80" height="8" rx="2" fill="#34d399"/></svg>
+      </span>
+    </a>
+    <div class="flex gap-6 text-sm">
+      <a href="<?= site_url('about') ?>" class="hover:text-white transition">About</a>
+      <a href="<?= site_url('posts') ?>" class="hover:text-white transition">Articles</a>
+      <a href="<?= site_url('register') ?>" class="hover:text-white transition">Join</a>
+    </div>
+    <div class="flex gap-4 mt-4 md:mt-0">
+      <a href="#" class="hover:text-white"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.56v14.91A4.56 4.56 0 0 1 19.44 24H4.56A4.56 4.56 0 0 1 0 19.44V4.56A4.56 4.56 0 0 1 4.56 0h14.88A4.56 4.56 0 0 1 24 4.56zM7.09 19.44h2.91V9.36H7.09zm1.45-11.09a1.69 1.69 0 1 1 0-3.38 1.69 1.69 0 0 1 0 3.38zm10.9 11.09h-2.91v-5.09c0-1.21-.02-2.77-1.69-2.77-1.69 0-1.95 1.32-1.95 2.68v5.18h-2.91V9.36h2.8v1.37h.04a3.07 3.07 0 0 1 2.76-1.52c2.95 0 3.5 1.94 3.5 4.47v5.76z"/></svg></a>
+      <a href="#" class="hover:text-white"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.954 4.569c-.885.389-1.83.654-2.825.775 1.014-.611 1.794-1.574 2.163-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-2.72 0-4.924 2.204-4.924 4.924 0 .386.045.763.127 1.124C7.691 8.095 4.066 6.13 1.64 3.161c-.423.722-.666 1.561-.666 2.475 0 1.708.87 3.216 2.188 4.099-.807-.026-1.566-.247-2.228-.616v.062c0 2.385 1.693 4.374 3.946 4.827-.413.111-.849.171-1.296.171-.317 0-.626-.03-.928-.086.627 1.956 2.444 3.377 4.6 3.417-1.68 1.318-3.809 2.105-6.102 2.105-.396 0-.787-.023-1.175-.069 2.179 1.397 4.768 2.213 7.557 2.213 9.054 0 14.009-7.496 14.009-13.986 0-.21 0-.423-.016-.634.962-.689 1.797-1.56 2.457-2.548l-.047-.02z"/></svg></a>
+      <a href="#" class="hover:text-white"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c-5.468 0-9.837 4.369-9.837 9.837 0 4.355 2.82 8.065 6.839 9.387.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.461-1.11-1.461-.908-.62.069-.608.069-.608 1.004.07 1.532 1.032 1.532 1.032.892 1.529 2.341 1.088 2.91.832.092-.646.35-1.088.636-1.339-2.221-.253-4.555-1.111-4.555-4.944 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.272.098-2.65 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.748-1.025 2.748-1.025.546 1.378.202 2.397.1 2.65.64.699 1.028 1.592 1.028 2.683 0 3.842-2.337 4.687-4.566 4.936.359.309.678.919.678 1.852 0 1.336-.012 2.417-.012 2.747 0 .267.18.577.688.48C19.18 20.064 22 16.354 22 12c0-5.468-4.369-9.837-9.837-9.837z"/></svg></a>
+    </div>
+    <div class="text-xs mt-4">&copy; <?= date('Y') ?> Bit By Bit. All rights reserved.</div>
+  </div>
+</footer>
 
     <!-- JavaScript -->
     <script src="<?= base_url('assets/js/script.js') ?>"></script>
