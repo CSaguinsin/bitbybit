@@ -1,11 +1,11 @@
 <?= $this->extend('layouts/main') ?>
 
-<?= $this->section('title') ?>Register<?= $this->endSection() ?>
+<?= $this->section('title') ?>Admin Registration<?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
 <div class="min-h-screen flex flex-col md:flex-row">
   <!-- Left: Tech Blogging Sidebar -->
-  <aside class="hidden md:flex flex-col justify-center items-center w-1/2 bg-gradient-to-br from-indigo-800 via-purple-800 to-pink-600 text-white p-10 relative">
+  <aside class="hidden md:flex flex-col justify-center items-center w-1/2 bg-gradient-to-br from-gray-900 via-indigo-900 to-purple-900 text-white p-10 relative">
     <div class="absolute inset-0 opacity-20 pointer-events-none select-none">
       <svg class="w-full h-full" viewBox="0 0 600 600" fill="none"><circle cx="300" cy="300" r="300" fill="url(#paint0_radial)" fill-opacity=".7"/><defs><radialGradient id="paint0_radial" cx="0" cy="0" r="1" gradientTransform="translate(300 300) scale(300)" gradientUnits="userSpaceOnUse"><stop stop-color="#fff"/><stop offset="1" stop-color="#a5b4fc"/></radialGradient></defs></svg>
     </div>
@@ -15,31 +15,22 @@
         <svg width="120" height="120" viewBox="0 0 120 120" fill="none"><rect x="10" y="20" width="100" height="60" rx="8" fill="#fff" fill-opacity=".12"/><rect x="18" y="30" width="84" height="8" rx="2" fill="#a5b4fc"/><rect x="18" y="44" width="60" height="6" rx="2" fill="#fbbf24"/><rect x="18" y="54" width="84" height="6" rx="2" fill="#f472b6"/><rect x="18" y="64" width="40" height="6" rx="2" fill="#34d399"/></svg>
       </div>
       <div class="text-3xl font-extrabold tracking-tight mb-2 font-mono">BIT BY BIT</div>
-      <div class="text-lg font-semibold mb-4">Join the Tech Writers' Hub</div>
-      <div class="text-base text-indigo-100 mb-6 text-center">Read, write, and connect with thousands of developers and engineers. Share your knowledge, grow your audience, and stay ahead in tech.</div>
-      <div class="w-full mb-6">
-        <div class="font-bold text-indigo-200 text-sm mb-2">Why Join?</div>
-        <ul class="space-y-1 text-indigo-100 text-sm">
-          <li><span class="font-mono text-green-300">&lt;Write/&gt;</span> Publish articles and tutorials</li>
-          <li><span class="font-mono text-yellow-300">#Read</span> Curated tech content daily</li>
-          <li><span class="font-mono text-pink-300">@Connect</span> Follow and message other devs</li>
-          <li><span class="font-mono text-blue-300">★</span> Build your portfolio & reputation</li>
-        </ul>
-      </div>
-      <div class="bg-white/10 rounded-lg p-4 text-sm italic text-indigo-100 border-l-4 border-indigo-400 mb-2">“I landed my dream job after sharing my projects here!”<br><span class="not-italic font-bold text-indigo-200">— Priya, Full Stack Dev</span></div>
+      <div class="text-lg font-semibold mb-4">Admin Registration</div>
+      <div class="text-base text-indigo-100 mb-6 text-center">Create a new administrator account for the tech blogging platform. <span class="font-bold text-pink-200">Admins only!</span></div>
+      <div class="bg-white/10 rounded-lg p-4 text-sm italic text-indigo-100 border-l-4 border-indigo-400 mb-2">“With great power comes great responsibility.”<br><span class="not-italic font-bold text-indigo-200">— BIT BY BIT System</span></div>
     </div>
   </aside>
   <!-- Right: Form -->
   <div class="flex-1 flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-8">
     <div class="w-full max-w-md bg-white/90 backdrop-blur-lg rounded-2xl shadow-xl border border-gray-200 p-6 sm:p-8">
-      <h2 class="text-2xl font-bold text-gray-900 mb-2 text-center font-mono">Create your account</h2>
-      <p class="text-gray-500 text-center mb-6 text-sm">Start writing, reading, and connecting with the BIT BY BIT tech community</p>
+      <h2 class="text-2xl font-bold text-gray-900 mb-2 text-center font-mono">Create Admin Account</h2>
+      <p class="text-gray-500 text-center mb-6 text-sm">Register a new administrator for BIT BY BIT</p>
       <?php if (session()->getFlashdata('error')): ?>
         <div class="mb-4 bg-red-100 text-red-700 px-4 py-3 rounded-lg text-sm text-center">
           <?= session()->getFlashdata('error') ?>
         </div>
       <?php endif; ?>
-      <form action="<?= site_url('register') ?>" method="post" class="space-y-5">
+      <form action="<?= site_url('admin/register') ?>" method="post" class="space-y-5">
         <?= csrf_field() ?>
         <div class="relative">
           <input type="text" id="username" name="username" value="<?= old('username') ?>" required autocomplete="username" placeholder=" " class="peer block w-full rounded-lg border border-gray-300 bg-white/95 px-4 pt-5 pb-2 text-gray-900 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 focus:outline-none transition text-base placeholder-transparent">
@@ -87,23 +78,19 @@
             <?= $validation->getError('terms') ?>
           </div>
         <?php endif; ?>
-        <button type="submit" class="w-full py-3 mt-2 rounded-lg bg-gradient-to-r from-indigo-600 via-pink-500 to-purple-600 text-white font-bold shadow-lg hover:scale-[1.02] transition-all text-base">Create Account</button>
+        <button type="submit" class="w-full py-3 mt-2 rounded-lg bg-gradient-to-r from-indigo-600 via-pink-500 to-purple-600 text-white font-bold shadow-lg hover:scale-[1.02] transition-all text-base">Create Admin Account</button>
       </form>
       <div class="mt-6 text-center">
-        <p class="text-sm text-gray-600">Already have an account? <a href="<?= site_url('login') ?>" class="text-indigo-600 font-semibold hover:underline">Sign in</a></p>
+        <p class="text-sm text-gray-600">Already an admin? <a href="<?= site_url('admin/login') ?>" class="text-indigo-600 font-semibold hover:underline">Sign in as Admin</a></p>
       </div>
-      <p class="text-sm text-gray-600 mt-4 text-center">
-        Are you an admin? 
-        <a href="<?= site_url('admin/login') ?>" class="text-indigo-600 font-semibold hover:underline">Admin Login</a>
-      </p>
     </div>
   </div>
 </div>
 <!-- Mobile: Blogging illustration and quote above form -->
-<div class="md:hidden flex flex-col items-center justify-center bg-gradient-to-br from-indigo-800 via-purple-800 to-pink-600 text-white py-8 px-4">
+<div class="md:hidden flex flex-col items-center justify-center bg-gradient-to-br from-gray-900 via-indigo-900 to-purple-900 text-white py-8 px-4">
   <div class="mb-4">
     <svg width="80" height="80" viewBox="0 0 120 120" fill="none"><rect x="10" y="20" width="100" height="60" rx="8" fill="#fff" fill-opacity=".12"/><rect x="18" y="30" width="84" height="8" rx="2" fill="#a5b4fc"/><rect x="18" y="44" width="60" height="6" rx="2" fill="#fbbf24"/><rect x="18" y="54" width="84" height="6" rx="2" fill="#f472b6"/><rect x="18" y="64" width="40" height="6" rx="2" fill="#34d399"/></svg>
   </div>
-  <div class="bg-white/10 rounded-lg p-4 text-sm italic text-indigo-100 border-l-4 border-indigo-400 mb-2">“I landed my dream job after sharing my projects here!”<br><span class="not-italic font-bold text-indigo-200">— Priya, Full Stack Dev</span></div>
+  <div class="bg-white/10 rounded-lg p-4 text-sm italic text-indigo-100 border-l-4 border-indigo-400 mb-2">“With great power comes great responsibility.”<br><span class="not-italic font-bold text-indigo-200">— BIT BY BIT System</span></div>
 </div>
 <?= $this->endSection() ?> 

@@ -20,6 +20,10 @@ $routes->get('forgot-password', 'Auth::forgotPassword');
 $routes->post('forgot-password', 'Auth::processForgotPassword');
 $routes->get('reset-password/(:segment)', 'Auth::resetPassword/$1');
 $routes->post('reset-password', 'Auth::processResetPassword');
+$routes->get('admin/login', 'Auth::adminLogin');
+$routes->post('admin/login', 'Auth::attemptAdminLogin');
+$routes->get('admin/register', 'Auth::adminRegister');
+$routes->post('admin/register', 'Auth::attemptAdminRegister');
 
 // User profile routes
 $routes->group('profile', ['filter' => 'auth'], function($routes) {
@@ -65,6 +69,7 @@ $routes->group('admin', ['filter' => 'admin'], function($routes) {
     $routes->post('categories/store', 'Admin::storeCategory');
     $routes->post('categories/update/(:num)', 'Admin::updateCategory/$1');
     $routes->get('categories/delete/(:num)', 'Admin::deleteCategory/$1');
+    $routes->get('dashboard', 'Admin::dashboard');
 });
 
 // Static pages
