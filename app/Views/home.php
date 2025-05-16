@@ -238,11 +238,11 @@
   </div>
 </section>
 
-<!-- RECENT ARTICLES GRID WITH FILTERS -->
+<!-- RECENT ARTICLES GRID - daily.dev inspired horizontal scroll -->
 <section class="py-20 bg-gradient-to-br from-indigo-50 via-white to-pink-50">
   <div class="max-w-7xl mx-auto px-6">
     <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-4">
-      <h2 class="text-2xl font-bold text-gray-900">Recent Articles</h2>
+      <h2 class="text-2xl font-bold text-gray-900 font-mono tracking-tight">Recent Articles</h2>
       <div class="flex gap-2 flex-wrap">
         <button class="px-4 py-2 rounded-full bg-gradient-to-r from-indigo-600 via-pink-500 to-purple-600 text-white font-semibold text-sm shadow hover:scale-105 transition-all">All</button>
         <button class="px-4 py-2 rounded-full bg-white/60 backdrop-blur border border-indigo-200 text-indigo-700 font-semibold text-sm hover:bg-indigo-50 transition">GraphQL</button>
@@ -250,37 +250,38 @@
         <button class="px-4 py-2 rounded-full bg-white/60 backdrop-blur border border-amber-200 text-amber-700 font-semibold text-sm hover:bg-amber-50 transition">Cloud</button>
       </div>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-      <div class="bg-white/60 backdrop-blur-lg rounded-xl shadow-xl p-6 flex flex-col hover:shadow-2xl hover:scale-105 transition-all">
-        <img src="https://via.placeholder.com/400x200?text=Recent+1" class="w-full h-32 object-cover rounded mb-3" alt="Recent 1">
-        <span class="bg-gradient-to-r from-indigo-200 via-pink-200 to-purple-200 text-indigo-700 text-xs font-bold px-3 py-1 rounded-full mb-2">GraphQL</span>
-        <h4 class="font-bold text-lg mb-1 hover:underline"><a href="#">Introduction to GraphQL</a></h4>
-        <p class="text-gray-600 text-sm mb-2">A gentle intro to GraphQL for REST developers.</p>
-        <div class="flex items-center mt-auto">
-          <img src="https://via.placeholder.com/32" class="h-8 w-8 rounded-full mr-2" alt="Author">
-          <span class="text-xs text-gray-500">Priya Nair</span>
+    <div class="flex gap-8 overflow-x-auto pb-4 snap-x scrollbar-thin scrollbar-thumb-indigo-200 scrollbar-track-white">
+      <?php if (!empty($posts)): ?>
+        <?php foreach ($posts as $post): ?>
+          <div class="min-w-[340px] max-w-xs bg-white/60 backdrop-blur-lg rounded-2xl shadow-xl hover:shadow-2xl hover:scale-105 hover:ring-2 hover:ring-indigo-400 transition-all duration-200 flex-shrink-0 snap-center flex flex-col">
+            <a href="<?= site_url('posts/' . $post['id']) ?>">
+              <img src="<?= $post['featured_image'] ? base_url($post['featured_image']) : 'https://via.placeholder.com/400x200?text=No+Image' ?>" class="w-full h-44 object-cover rounded-t-2xl" alt="Article Image">
+            </a>
+            <div class="p-6 flex flex-col flex-1">
+              <span class="bg-gradient-to-r from-indigo-200 via-pink-200 to-purple-200 text-indigo-700 text-xs font-bold px-3 py-1 rounded-full mb-2 w-max font-mono tracking-wide">
+                <?= esc(ucwords(str_replace('-', ' ', $post['category']))) ?>
+              </span>
+              <h4 class="font-bold text-lg mb-2 hover:underline font-mono">
+                <a href="<?= site_url('posts/' . $post['id']) ?>"><?= esc($post['title']) ?></a>
+              </h4>
+              <p class="text-gray-600 text-sm mb-4 line-clamp-3 flex-1 font-mono">
+                <?= esc($post['summary']) ?>
+              </p>
+              <div class="flex items-center mt-auto gap-3">
+                <img src="https://api.dicebear.com/7.x/identicon/svg?seed=<?= urlencode($post['author_name']) ?>" class="h-8 w-8 rounded-full border-2 border-indigo-200 bg-white" alt="Author">
+                <span class="text-xs text-gray-700 font-mono">By <?= esc($post['author_name']) ?></span>
+                <span class="text-xs text-gray-400 font-mono ml-auto">
+                  <?= date('M j, Y', strtotime($post['date_created'])) ?>
+                </span>
+              </div>
+            </div>
+          </div>
+        <?php endforeach; ?>
+      <?php else: ?>
+        <div class="col-span-full text-center py-12 text-gray-500 font-mono text-lg">
+          No articles found. Be the first to <a href="<?= site_url('posts/create') ?>" class="underline text-indigo-600">write one</a>!
         </div>
-      </div>
-      <div class="bg-white/60 backdrop-blur-lg rounded-xl shadow-xl p-6 flex flex-col hover:shadow-2xl hover:scale-105 transition-all">
-        <img src="https://via.placeholder.com/400x200?text=Recent+2" class="w-full h-32 object-cover rounded mb-3" alt="Recent 2">
-        <span class="bg-gradient-to-r from-pink-200 via-indigo-100 to-purple-200 text-pink-700 text-xs font-bold px-3 py-1 rounded-full mb-2">TypeScript</span>
-        <h4 class="font-bold text-lg mb-1 hover:underline"><a href="#">TypeScript Best Practices</a></h4>
-        <p class="text-gray-600 text-sm mb-2">Tips for writing robust, maintainable TS code.</p>
-        <div class="flex items-center mt-auto">
-          <img src="https://via.placeholder.com/32" class="h-8 w-8 rounded-full mr-2" alt="Author">
-          <span class="text-xs text-gray-500">Liam O'Brien</span>
-        </div>
-      </div>
-      <div class="bg-white/60 backdrop-blur-lg rounded-xl shadow-xl p-6 flex flex-col hover:shadow-2xl hover:scale-105 transition-all">
-        <img src="https://via.placeholder.com/400x200?text=Recent+3" class="w-full h-32 object-cover rounded mb-3" alt="Recent 3">
-        <span class="bg-gradient-to-r from-amber-200 via-indigo-100 to-purple-200 text-amber-700 text-xs font-bold px-3 py-1 rounded-full mb-2">Cloud</span>
-        <h4 class="font-bold text-lg mb-1 hover:underline"><a href="#">Cloud Infrastructure Patterns</a></h4>
-        <p class="text-gray-600 text-sm mb-2">Modern patterns for scalable cloud apps.</p>
-        <div class="flex items-center mt-auto">
-          <img src="https://via.placeholder.com/32" class="h-8 w-8 rounded-full mr-2" alt="Author">
-          <span class="text-xs text-gray-500">Samira Patel</span>
-        </div>
-      </div>
+      <?php endif; ?>
     </div>
   </div>
 </section>

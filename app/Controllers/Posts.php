@@ -44,20 +44,30 @@ class Posts extends BaseController
         // Order by most recent
         $builder = $builder->orderBy('id', 'DESC');
         
-        $data['posts'] = $builder->findAll();
+        $posts = $builder->select('bitbybit_posts.*, bitbybit_users.username as author_name')
+            ->join('bitbybit_users', 'bitbybit_users.id = bitbybit_posts.created_by')
+            ->findAll();
+        
+        $data['posts'] = $posts;
         
         return view('posts/index', $data);
     }
     
     public function show($id)
     {
-        // In a real implementation, you would fetch the post from the database
-        // For now, we'll just use our static view
+        $post = $this->postModel
+            ->select('bitbybit_posts.*, bitbybit_users.username')
+            ->join('bitbybit_users', 'bitbybit_users.id = bitbybit_posts.created_by')
+            ->where('bitbybit_posts.id', $id)
+            ->where('bitbybit_posts.published', 1)
+            ->first();
+        if (!$post) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('Post not found');
+        }
         $data = [
-            'title' => 'Article Title',
-            'post_id' => $id
+            'title' => $post['title'],
+            'post' => $post
         ];
-        
         return view('posts/show', $data);
     }
     

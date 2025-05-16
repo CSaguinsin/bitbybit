@@ -33,12 +33,12 @@
   <!-- Platform Stats -->
   <div class="w-full max-w-4xl grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
     <div class="bg-white/80 backdrop-blur-lg rounded-2xl p-6 flex flex-col items-center shadow border border-indigo-100">
-      <div class="text-4xl font-bold text-indigo-500 font-mono mb-1">128</div>
+      <div class="text-4xl font-bold text-indigo-500 font-mono mb-1"><?= esc($userCount ?? 0) ?></div>
       <div class="text-sm text-gray-700 font-semibold mb-1">Total Users</div>
       <div class="text-xs text-indigo-400 font-mono">Active tech writers</div>
     </div>
     <div class="bg-white/80 backdrop-blur-lg rounded-2xl p-6 flex flex-col items-center shadow border border-pink-100">
-      <div class="text-4xl font-bold text-pink-500 font-mono mb-1">342</div>
+      <div class="text-4xl font-bold text-pink-500 font-mono mb-1"><?= esc($postCount ?? 0) ?></div>
       <div class="text-sm text-gray-700 font-semibold mb-1">Published Posts</div>
       <div class="text-xs text-pink-400 font-mono">Articles & tutorials</div>
     </div>
@@ -46,6 +46,47 @@
       <div class="text-4xl font-bold text-green-400 font-mono mb-1">17</div>
       <div class="text-sm text-gray-700 font-semibold mb-1">Categories</div>
       <div class="text-xs text-green-400 font-mono">Tech topics</div>
+    </div>
+  </div>
+
+
+
+  <!-- Blog Cards Section -->
+  <div class="w-full max-w-6xl mx-auto mb-16">
+    <h2 class="text-xl font-bold mb-6 text-indigo-900 font-mono">Blogs Preview</h2>
+    <div class="flex gap-8 overflow-x-auto pb-4 snap-x scrollbar-thin scrollbar-thumb-indigo-200 scrollbar-track-white">
+      <?php if (!empty($posts)): ?>
+        <?php foreach ($posts as $post): ?>
+          <div class="min-w-[340px] max-w-xs bg-white/60 backdrop-blur-lg rounded-2xl shadow-xl hover:shadow-2xl hover:scale-105 hover:ring-2 hover:ring-indigo-400 transition-all duration-200 flex-shrink-0 snap-center flex flex-col">
+            <img src="<?= $post['featured_image'] ? base_url($post['featured_image']) : 'https://via.placeholder.com/400x200?text=No+Image' ?>" class="w-full h-44 object-cover rounded-t-2xl" alt="Article Image">
+            <div class="p-6 flex flex-col flex-1">
+              <span class="bg-gradient-to-r from-indigo-200 via-pink-200 to-purple-200 text-indigo-700 text-xs font-bold px-3 py-1 rounded-full mb-2 w-max font-mono tracking-wide">
+                <?= esc(ucwords(str_replace('-', ' ', $post['category']))) ?>
+              </span>
+              <h4 class="font-bold text-lg mb-2 hover:underline font-mono">
+                <?= esc($post['title']) ?>
+              </h4>
+              <p class="text-gray-600 text-sm mb-4 line-clamp-3 flex-1 font-mono">
+                <?= esc($post['summary']) ?>
+              </p>
+              <div class="flex items-center mt-auto gap-3">
+                <img src="https://api.dicebear.com/7.x/identicon/svg?seed=<?= urlencode($post['author_name']) ?>" class="h-8 w-8 rounded-full border-2 border-indigo-200 bg-white" alt="Author">
+                <span class="text-xs text-gray-700 font-mono">By <?= esc($post['author_name']) ?></span>
+                <span class="text-xs text-gray-400 font-mono ml-auto">
+                  <?= date('M j, Y', strtotime($post['date_created'])) ?>
+                </span>
+              </div>
+              <form action="<?= site_url('admin/posts/delete/' . $post['id']) ?>" method="post" class="mt-4" onsubmit="return confirm('Are you sure you want to delete this post?');">
+                <button type="submit" class="px-3 py-1 rounded bg-pink-600 text-white font-bold text-xs hover:bg-pink-700 transition w-full">DELETE</button>
+              </form>
+            </div>
+          </div>
+        <?php endforeach; ?>
+      <?php else: ?>
+        <div class="col-span-full text-center py-12 text-gray-500 font-mono text-lg">
+          No articles found.
+        </div>
+      <?php endif; ?>
     </div>
   </div>
 

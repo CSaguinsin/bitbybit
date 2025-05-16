@@ -31,7 +31,7 @@
 </head>
 <body class="min-h-screen flex flex-col bg-gray-50">
 
-<header class="sticky top-0 z-30 bg-white/80 backdrop-blur border-b border-gray-100 shadow-sm">
+<header id="mainHeader" class="sticky top-0 z-30 bg-white/80 backdrop-blur border-b border-gray-100 shadow-sm transition-colors duration-300">
   <div class="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
     <a href="<?= site_url('/') ?>" class="flex items-center gap-3 text-2xl font-extrabold text-indigo-700 tracking-tight">
       <span class="inline-block align-middle">
@@ -197,5 +197,19 @@
     
     <!-- Additional Scripts -->
     <?= $this->renderSection('scripts') ?>
+
+<script>
+// Header color change on scroll
+window.addEventListener('scroll', function() {
+  const header = document.getElementById('mainHeader');
+  if (window.scrollY > 40) {
+    header.classList.add('bg-indigo-900', 'text-white', 'border-indigo-900');
+    header.classList.remove('bg-white/80', 'border-gray-100');
+  } else {
+    header.classList.remove('bg-indigo-900', 'text-white', 'border-indigo-900');
+    header.classList.add('bg-white/80', 'border-gray-100');
+  }
+});
+</script>
 </body>
 </html> 

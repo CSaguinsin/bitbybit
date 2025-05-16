@@ -2,11 +2,21 @@
 
 namespace App\Controllers;
 
+use App\Models\PostModel;
+
 class Home extends BaseController
 {
     public function index()
     {
-        return view('home');
+        $postModel = new PostModel();
+        $posts = $postModel->getPublishedPosts(6); // Show latest 6 posts with author_name
+
+        $data = [
+            'title' => 'Home',
+            'posts' => $posts
+        ];
+
+        return view('home', $data);
     }
 
     public function about()

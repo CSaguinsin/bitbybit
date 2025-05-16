@@ -149,48 +149,47 @@
   </div>
 </div>
 
-<!-- ARTICLE GRID -->
-<div class="max-w-7xl mx-auto px-2 sm:px-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 md:gap-x-10">
-  <?php if (!empty($posts) && is_array($posts)): ?>
-    <?php foreach ($posts as $post): ?>
-      <div class="bg-white/60 backdrop-blur-lg rounded-xl shadow-xl flex flex-col hover:shadow-2xl hover:scale-105 transition-all overflow-hidden">
-        <img src="<?= $post['featured_image'] ? base_url($post['featured_image']) : 'https://via.placeholder.com/800x450?text=No+Image' ?>" class="w-full h-40 sm:h-48 object-cover rounded-t-xl" alt="Article Image">
-        <div class="p-4 sm:p-6 flex flex-col flex-1">
-          <div class="flex flex-col sm:flex-row sm:justify-between mb-2 gap-1 sm:gap-0">
-            <span class="px-3 py-1 rounded-full bg-gradient-to-r from-indigo-200 via-pink-200 to-purple-200 text-indigo-700 text-xs font-bold w-max break-words">
+<!-- FEATURED/RECENT ARTICLES - daily.dev inspired horizontal scroll -->
+<div class="max-w-7xl mx-auto px-4 mb-12">
+  <div class="flex items-center justify-between mb-6">
+    <h2 class="text-xl font-bold text-gray-900 font-mono tracking-tight">Recent Articles</h2>
+    <a href="<?= site_url('posts/create') ?>" class="inline-flex items-center px-5 py-2 rounded-full bg-gradient-to-r from-indigo-600 via-pink-500 to-purple-600 text-white font-bold shadow hover:scale-105 transition-all text-sm">
+      <i class="fas fa-pencil-alt mr-2"></i> Write Article
+    </a>
+  </div>
+  <div class="flex gap-8 overflow-x-auto pb-4 snap-x scrollbar-thin scrollbar-thumb-indigo-200 scrollbar-track-white">
+    <?php if (!empty($posts) && is_array($posts)): ?>
+      <?php foreach ($posts as $post): ?>
+        <div class="min-w-[340px] max-w-xs bg-white/60 backdrop-blur-lg rounded-2xl shadow-xl hover:shadow-2xl hover:scale-105 hover:ring-2 hover:ring-indigo-400 transition-all duration-200 flex-shrink-0 snap-center flex flex-col">
+          <a href="<?= site_url('posts/' . $post['id']) ?>">
+            <img src="<?= $post['featured_image'] ? base_url($post['featured_image']) : 'https://via.placeholder.com/400x200?text=No+Image' ?>" class="w-full h-44 object-cover rounded-t-2xl" alt="Article Image">
+          </a>
+          <div class="p-6 flex flex-col flex-1">
+            <span class="bg-gradient-to-r from-indigo-200 via-pink-200 to-purple-200 text-indigo-700 text-xs font-bold px-3 py-1 rounded-full mb-2 w-max font-mono tracking-wide">
               <?= esc(ucwords(str_replace('-', ' ', $post['category']))) ?>
             </span>
-            <small class="text-gray-500">
-              <?= date('M j, Y', strtotime($post['created_at'] ?? $post['created'] ?? 'now')) ?>
-            </small>
-          </div>
-          <h3 class="text-base sm:text-lg font-bold mb-2 break-words">
-            <a href="<?= site_url('posts/' . $post['id']) ?>" class="hover:underline text-gray-900">
-              <?= esc($post['title']) ?>
-            </a>
-          </h3>
-          <p class="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 flex-1 break-words">
-            <?= esc($post['summary']) ?>
-          </p>
-          <div class="flex justify-between items-center mt-auto">
-            <div class="flex items-center">
-              <img src="https://via.placeholder.com/32" class="h-7 w-7 sm:h-8 sm:w-8 rounded-full mr-2" alt="Author Avatar">
-              <span class="text-xs text-gray-700 break-words">
-                <?= isset($post['created_by']) ? 'User #' . esc($post['created_by']) : 'Unknown Author' ?>
+            <h4 class="font-bold text-lg mb-2 hover:underline font-mono">
+              <a href="<?= site_url('posts/' . $post['id']) ?>"><?= esc($post['title']) ?></a>
+            </h4>
+            <p class="text-gray-600 text-sm mb-4 line-clamp-3 flex-1 font-mono">
+              <?= esc($post['summary']) ?>
+            </p>
+            <div class="flex items-center mt-auto gap-3">
+              <img src="https://api.dicebear.com/7.x/identicon/svg?seed=<?= urlencode($post['author_name'] ?? 'unknown') ?>" class="h-8 w-8 rounded-full border-2 border-indigo-200 bg-white" alt="Author">
+              <span class="text-xs text-gray-700 font-mono">By <?= esc($post['author_name'] ?? 'Unknown Author') ?></span>
+              <span class="text-xs text-gray-400 font-mono ml-auto">
+                <?= date('M j, Y', strtotime($post['date_created'] ?? $post['created_at'] ?? 'now')) ?>
               </span>
-            </div>
-            <div class="flex items-center text-gray-500 text-xs gap-2">
-              <span><i class="far fa-heart mr-1"></i>0</span>
             </div>
           </div>
         </div>
+      <?php endforeach; ?>
+    <?php else: ?>
+      <div class="col-span-full text-center py-12 text-gray-500 font-mono text-lg">
+        No articles found. Be the first to <a href="<?= site_url('posts/create') ?>" class="underline text-indigo-600">write one</a>!
       </div>
-    <?php endforeach; ?>
-  <?php else: ?>
-    <div class="col-span-full text-center py-12 text-gray-500 font-mono text-lg">
-      No articles found. Be the first to <a href="<?= site_url('posts/create') ?>" class="underline text-indigo-600">write one</a>!
-    </div>
-  <?php endif; ?>
+    <?php endif; ?>
+  </div>
 </div>
 
 <!-- PAGINATION -->

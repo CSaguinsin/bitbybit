@@ -24,63 +24,28 @@ class Profile extends BaseController
      */
     public function index()
     {
-        // Check if user is logged in
-        if (!session()->get('isLoggedIn')) {
+        $userId = session()->get('user_id');
+        if (!$userId) {
             return redirect()->to('login');
         }
-        
-        $userId = session()->get('user_id');
-        
-        // In a real implementation, you would fetch the user's data from the database
-        // For demonstration purposes, we'll use mock data
-        $userData = [
-            'id' => $userId,
-            'username' => session()->get('username'),
-            'email' => session()->get('email'),
-            'bio' => 'Technology enthusiast and software developer with a passion for building innovative solutions.',
-            'profile_image' => 'https://via.placeholder.com/200',
-            'social_twitter' => '@' . session()->get('username'),
-            'social_github' => 'github.com/' . session()->get('username'),
-            'social_linkedin' => 'linkedin.com/in/' . session()->get('username'),
-            'post_count' => 5,
-            'comment_count' => 12,
-            'date_created' => '2024-01-15'
-        ];
-        
-        // In a real implementation, you would fetch the user's recent posts and comments
-        // For demonstration purposes, we'll use mock data
-        $recentPosts = [];
-        for ($i = 1; $i <= 3; $i++) {
-            $recentPosts[] = [
-                'id' => $i,
-                'title' => 'Sample Post ' . $i,
-                'summary' => 'This is a sample post created by the user',
-                'date_created' => date('Y-m-d H:i:s', strtotime('-' . $i . ' days')),
-                'likes' => rand(5, 50),
-                'published' => rand(0, 1)
-            ];
-        }
-        
-        $recentComments = [];
-        for ($i = 1; $i <= 3; $i++) {
-            $recentComments[] = [
-                'id' => $i,
-                'post_id' => $i,
-                'post_title' => 'Post Title ' . $i,
-                'content' => 'This is a sample comment by the user on post ' . $i,
-                'date_created' => date('Y-m-d H:i:s', strtotime('-' . $i . ' days')),
-                'likes' => rand(1, 20)
-            ];
-        }
-        
-        $data = [
-            'title' => 'My Profile',
-            'user' => $userData,
-            'recentPosts' => $recentPosts,
-            'recentComments' => $recentComments
-        ];
-        
-        return view('profile/index', $data);
+        $userModel = new UserModel();
+        $postModel = new PostModel();
+
+        $user = $userModel
+            ->select('username, email, date_created')
+            ->where('id', $userId)
+            ->first();
+
+        $posts = $postModel
+            ->select('id, title, date_created')
+            ->where('created_by', $userId)
+            ->orderBy('date_created', 'DESC')
+            ->findAll();
+
+        return view('profile/index', [
+            'user' => $user,
+            'posts' => $posts
+        ]);
     }
     
     /**
