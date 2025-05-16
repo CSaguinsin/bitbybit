@@ -28,4 +28,5 @@ jobs:
           gcloud compute ssh sia-project \
             --zone=asia-southeast1-c \
             --project=${{ secrets.GCP_PROJECT_ID }} \
+            --command='git config --global --add safe.directory /srv/bitbybit'
             --command='cd /srv/bitbybit && git pull'
